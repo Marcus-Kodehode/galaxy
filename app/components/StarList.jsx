@@ -1,3 +1,5 @@
+"use client";
+
 export default function StarList({ stars }) {
   if (!stars || stars.length === 0) return <div>Ingen stjerner funnet.</div>;
   return (
