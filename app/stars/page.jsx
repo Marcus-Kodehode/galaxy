@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from 'react';
 import SearchAndFilter from '../components/SearchAndFilter';
 import StarList from '../components/StarList';
 import { useSearchParams } from 'next/navigation';
@@ -11,7 +12,6 @@ export default function StarsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Her skal det hentes fra NASA API, men bruker mock-data foreløpig
     const allStars = [
       { id: 1, name: 'Solen', description: 'Vår nærmeste stjerne.' },
       { id: 2, name: 'Sirius', description: 'Den klareste stjernen på nattehimmelen.' },
@@ -29,7 +29,9 @@ export default function StarsPage() {
   return (
     <main className="container mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-6">Stjerner i Melkeveien</h1>
-      <SearchAndFilter type="stjerne" filters={["Solen", "Sirius", "Betelgeuse"]} />
+      <Suspense fallback={<div>Laster søk...</div>}>
+        <SearchAndFilter type="stjerne" filters={["Solen", "Sirius", "Betelgeuse"]} />
+      </Suspense>
       {loading ? <div>Laster...</div> : <StarList stars={stars} />}
     </main>
   );

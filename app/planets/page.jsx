@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from 'react';
 import SearchAndFilter from '../components/SearchAndFilter';
 import PlanetList from '../components/PlanetList';
 import { useSearchParams } from 'next/navigation';
@@ -11,7 +12,6 @@ export default function PlanetsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Her skal det hentes fra NASA API, men bruker mock-data foreløpig
     const allPlanets = [
       { id: 1, name: 'Jorden', description: 'Vår egen planet.' },
       { id: 2, name: 'Mars', description: 'Den røde planeten.' },
@@ -29,8 +29,11 @@ export default function PlanetsPage() {
   return (
     <main className="container mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-6">Planeter i Melkeveien</h1>
-      <SearchAndFilter type="planet" filters={["Jorden", "Mars", "Jupiter"]} />
+      <Suspense fallback={<div>Laster søk...</div>}>
+        <SearchAndFilter type="planet" filters={["Jorden", "Mars", "Jupiter"]} />
+      </Suspense>
       {loading ? <div>Laster...</div> : <PlanetList planets={planets} />}
     </main>
   );
 }
+
