@@ -1,3 +1,5 @@
+"use client";
+
 export default function PlanetList({ planets }) {
   if (!planets || planets.length === 0) return <div>Ingen planeter funnet.</div>;
   return (
